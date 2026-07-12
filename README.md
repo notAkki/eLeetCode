@@ -19,7 +19,7 @@
 
 **eLeetCode** adds a polished tracking layer directly to LeetCode so every accepted solution can become part of a personal practice database. Seamlessly log how a problem felt, save your solution code, mark what needs review, and use the dashboard to decide what to practice next.
 
-https://github.com/user-attachments/assets/6f558916-75cc-468c-9d6e-02b5ea0c0c72
+https://github.com/user-attachments/assets/84e9781c-76b8-4db8-8098-eb174518d736
 
 ## Features
 
