@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "eLeetCode",
+  "version": "1.0",
+  "description": "Your personal practice database for LeetCode.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://leetcode.com/problems/*",
+    "https://api.github.com/*"
+  ],
+  "background": {
+    "service_worker": "background/main.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://leetcode.com/problems/*"],
+      "js": ["content/main.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "eLeetCode",
+    "default_icon": {
+      "128": "icons/logo-128.png"
+    }
+  },
+  "icons": {
+    "128": "icons/logo-128.png"
+  }
+}
