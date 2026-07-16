@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "eLeetCode",
-  "version": "1.1",
+  "version": "1.0.1",
   "description": "Your personal practice database for LeetCode.",
   "permissions": ["storage"],
   "host_permissions": [
