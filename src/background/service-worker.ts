@@ -3,13 +3,23 @@ import type {
   ExtensionResponse,
   GithubSettings,
   LoadTrackerResult,
-  SaveSessionResult
+  SaveSessionResult,
 } from "../lib/model";
 import { loadTracker, saveSession } from "./handlers/saveSession";
-import {
-  loadGithubSettings,
-  saveGithubSettings
-} from "./settingsStorage";
+import { loadGithubSettings, saveGithubSettings } from "./settingsStorage";
+
+const WELCOME_PAGE_URL = "https://eleetcode.aksharbarot.com";
+
+chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason !== chrome.runtime.OnInstalledReason.INSTALL) {
+    return;
+  }
+
+  void chrome.tabs.create({
+    url: WELCOME_PAGE_URL,
+    active: true,
+  });
+});
 
 chrome.runtime.onMessage.addListener(
   (
@@ -18,16 +28,16 @@ chrome.runtime.onMessage.addListener(
     sendResponse: (
       response: ExtensionResponse<
         GithubSettings | LoadTrackerResult | SaveSessionResult
-      >
-    ) => void
+      >,
+    ) => void,
   ) => {
     void handleMessage(message).then(sendResponse);
     return true;
-  }
+  },
 );
 
 async function handleMessage(
-  message: ExtensionMessage
+  message: ExtensionMessage,
 ): Promise<
   ExtensionResponse<GithubSettings | LoadTrackerResult | SaveSessionResult>
 > {
@@ -36,25 +46,25 @@ async function handleMessage(
       case "SAVE_SESSION":
         return {
           ok: true,
-          data: await saveSession(message.payload)
+          data: await saveSession(message.payload),
         };
 
       case "LOAD_TRACKER":
         return {
           ok: true,
-          data: await loadTracker()
+          data: await loadTracker(),
         };
 
       case "LOAD_GITHUB_SETTINGS":
         return {
           ok: true,
-          data: await loadGithubSettings()
+          data: await loadGithubSettings(),
         };
 
       case "SAVE_GITHUB_SETTINGS":
         return {
           ok: true,
-          data: await saveGithubSettings(message.payload)
+          data: await saveGithubSettings(message.payload),
         };
 
       default:
@@ -63,16 +73,16 @@ async function handleMessage(
   } catch (error) {
     return {
       ok: false,
-      error: error instanceof Error ? error.message : "Unexpected error."
+      error: error instanceof Error ? error.message : "Unexpected error.",
     };
   }
 }
 
 function exhaustiveMessageError(
-  message: never
+  message: never,
 ): ExtensionResponse<GithubSettings | LoadTrackerResult | SaveSessionResult> {
   return {
     ok: false,
-    error: `Unsupported message: ${JSON.stringify(message)}`
+    error: `Unsupported message: ${JSON.stringify(message)}`,
   };
 }
